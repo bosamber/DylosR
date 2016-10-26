@@ -19,8 +19,8 @@ maak_dagplot <- function (plot_datum, plot_data){
     # y-as: tickmarks en labels
     y_tick     <- numeric()
     y_label    <- character()
-    for (aantal in seq(0, 800, by=100)){
-        y_tick <- append(y_tick, aantal*1000)
+    for (aantal in seq(0, 8000, by=1000)){
+        y_tick <- append(y_tick, aantal)
         y_label<- append(y_label, as.character(aantal))
     }
 
@@ -31,21 +31,21 @@ maak_dagplot <- function (plot_datum, plot_data){
          main = plot_titel,
          sub  = plot_subtitel,
          xlim = c(0,   1), xlab = "",
-         ylim = c(0, 800000), 
-         ylab = "aantal deeltjes per ft³ x 1000", las = 1
+         ylim = c(0, 8000), 
+         ylab = "aantal deeltjes per 0.01ft³", las = 1
     )
     # Zet dan de assen erbij  
     axis(side = 1, at = x_tick, labels = x_label, las = 2)
     axis(side = 2, at = y_tick, labels = y_label, las = 2)
     
     # Voeg de lijngrafieken toe 
-    lines(plot_data$chron_tijd, plot_data$Small_ft3, type = "l", 
+    lines(plot_data$chron_tijd, plot_data$Small_01ft3, type = "l", 
            col = "red",   cex = 0.5)
-    lines(plot_data$chron_tijd, plot_data$Large_ft3, type = "l", 
+    lines(plot_data$chron_tijd, plot_data$Large_01ft3, type = "l", 
           col = "black", cex = 2)
     
     # Voeg de legenda toe 
-    legend(0.8,800000, title="deeltjesgrootte", 
+    legend(0.8,8000, title="deeltjesgrootte", 
            legend=c("> 0,5 µm", "> 2,5 µm"), col=c("red","black"),
            cex=1, lty = 1)
     

@@ -10,7 +10,7 @@ cat("\014")
 # Bewaar directory vanwaar dit programma is aangeroepen
 oude_werkdirectory <- getwd()
 # Ga naar de applicatie directory van dit programma
-setwd('~/Applications/Dylos')
+setwd('~/Applications/DylosR')
 
 # Zet directories en bestandslocaties klaar
 source('./Dylos_config.R', echo = TRUE)
@@ -21,7 +21,7 @@ importlog  <- paste0(log_dir,"DylosDM_",format(Sys.time(), "%Y%m%d%H%M%S"), ".lo
 sink(file = importlog, split = TRUE)
 
 ## Lees benodigde functies in
-source(paste0(function_dir,'omzetten_naar_foot3.R'))
+source(paste0(function_dir,'omzetten_naar_01foot3.R'))
 #=============================================================================#
 load(Dylos_ods)
 
@@ -71,11 +71,11 @@ dm_merge$maand            <- months(dm_merge$meting_datumtijd)
 # cubic foot
 table(dm_merge$meeteenheid_txt)
 
-dm_merge$Small_ft3 <-apply(dm_merge[ , c('Small', 'meeteenheid_txt')],
-                       FUN = omzetten_naar_foot3, MARGIN = 1)
-dm_merge$Large_ft3 <-apply(dm_merge[ , c('Large', 'meeteenheid_txt')],
-                       FUN = omzetten_naar_foot3, MARGIN = 1)
-dm_merge$pm25_ft3  <- dm_merge$Small - dm_merge$Large
+dm_merge$Small_01ft3 <-apply(dm_merge[ , c('Small', 'meeteenheid_txt')],
+                       FUN = omzetten_naar_01foot3, MARGIN = 1)
+dm_merge$Large_01ft3 <-apply(dm_merge[ , c('Large', 'meeteenheid_txt')],
+                       FUN = omzetten_naar_01foot3, MARGIN = 1)
+dm_merge$pm25_01ft3  <- dm_merge$Small_01ft3 - dm_merge$Large_01ft3
 
 # verwijder kolom die niet meer nodig is
 dm_merge$meeteenheid_txt <- NULL
@@ -88,9 +88,10 @@ DylosDM_metingen <- dm_merge
 save(file=Dylos_dm, DylosDM_metingen )
                              
 #=============================================================================#
-# Verwijder alle objecten
-# rm(list=ls())
-
 setwd(oude_werkdirectory)
+
+# Verwijder alle objecten
+rm(list=ls())
+
 # Sluit de log af
 sink()

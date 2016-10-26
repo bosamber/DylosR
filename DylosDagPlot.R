@@ -9,7 +9,7 @@ cat("\014")
 # Bewaar directory vanwaar dit programma is aangeroepen
 oude_werkdirectory <- getwd()
 # Ga naar de applicatie directory van dit programma
-setwd('~/Applications/Dylos')
+setwd('~/Applications/DylosR')
 
 # Zet directories en bestandslocaties klaar
 source('./Dylos_config.R', echo = TRUE)
@@ -24,7 +24,7 @@ source(paste0(function_dir, 'maak_dagplot.R'))
 load(Dylos_dm)
 
 dagen_aanwezig <- unique(DylosDM_metingen$meting_datum)
-for (dag in dagen_aanwezig){
+for (dag in dagen_aanwezig[1]){
     dag_fmt <- (as.Date(dag, origin = "1970-01-01"))
     
     # Maak bestandsnaam voor plot aan
@@ -35,7 +35,7 @@ for (dag in dagen_aanwezig){
     # Selecteer data voor plot
     plot_data     <- DylosDM_metingen[DylosDM_metingen$meting_datum == dag,
                                       c('meting_datum', 'meting_tijdstip',
-                                        'Small_ft3', 'Large_ft3')]
+                                        'Small_01ft3', 'Large_01ft3')]
     
     # Zet grafische uitvoer naar extern bestand
     png(filename = plot_bestand,

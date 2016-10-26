@@ -6,7 +6,7 @@ cat("\014")
 # Bewaar directory vanwaar dit programma is aangeroepen
 oude_werkdirectory <- getwd()
 # Ga naar de applicatie directory van dit programma
-setwd('~/Applications/Dylos')
+setwd('~/Applications/DylosR')
 
 # Zet directories en bestandslocaties klaar
 source('./Dylos_config.R', echo = TRUE)
@@ -89,7 +89,9 @@ while (continue_program) {
             break
         }
     }
-    if (loopje > 5) continue_program <- FALSE
+    
+    continue_program <- FALSE
+    # if (loopje > 5) continue_program <- FALSE
 }
 
 setwd(oude_werkdirectory)
